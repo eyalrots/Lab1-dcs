@@ -6,6 +6,7 @@ extern volatile SYS_mode_t lpm_mode;
 //--------------------------------------------------------------------
 //             System Configuration
 //--------------------------------------------------------------------
+
 void sysConfig(void) {
   GPIOconfig();
   // TIMERconfig();

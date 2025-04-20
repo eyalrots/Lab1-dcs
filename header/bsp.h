@@ -4,7 +4,6 @@
 #include  <msp430.h>          // MSP430x2xx
 // #include  <msp430xG46x.h>  // MSP430x4xx
 
-
 #define   debounceVal      250 //dont know
 #define   LEDs_SHOW_RATE   0xFFFF  // 62_5ms
 

@@ -3,6 +3,7 @@
 volatile FSM_state_t state;
 volatile SYS_mode_t lpm_mode;
 
+
 void main(void)
 {
   //INIT STATES:
