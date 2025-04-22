@@ -44,16 +44,18 @@ void skipLED(){
 //--------------------------------------------------------------------
 //     state 3: generate ones cycle of the wave - dependent on dir
 //--------------------------------------------------------------------  
-          
+
 void wave(){
 	volatile unsigned int i;
 	if (dir3 == 0x00){
 		for (i=3; i>0; i--){
 			write2Wave(0x80);
-			delay(2);
+			delay(3);
 		}
 		write2Wave(0x00);
-		__no_operation();
+		_no_operation();
+		_no_operation();
+		_no_operation();
 	}
 	else{
 		write2Wave(0x80);

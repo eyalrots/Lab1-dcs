@@ -31,7 +31,7 @@
 /* ============================================================================ */
 
 /******************************************************************************/
-/* lnk_msp430g2553.cmd - LINKER COMMAND FILE FOR LINKING MSP430G2553 PROGRAMS     */
+/* lnk_msp430fg4619.cmd - LINKER COMMAND FILE FOR LINKING MSP430FG4619 PROGRAMS     */
 /*                                                                            */
 /*   Usage:  lnk430 <obj files...>    -o <out file> -m <map file> lnk.cmd     */
 /*           cl430  <src files...> -z -o <out file> -m <map file> lnk.cmd     */
@@ -56,28 +56,43 @@ MEMORY
     SFR                     : origin = 0x0000, length = 0x0010
     PERIPHERALS_8BIT        : origin = 0x0010, length = 0x00F0
     PERIPHERALS_16BIT       : origin = 0x0100, length = 0x0100
-    RAM                     : origin = 0x0200, length = 0x0200
-    INFOA                   : origin = 0x10C0, length = 0x0040
-    INFOB                   : origin = 0x1080, length = 0x0040
-    INFOC                   : origin = 0x1040, length = 0x0040
-    INFOD                   : origin = 0x1000, length = 0x0040
-    FLASH                   : origin = 0xC000, length = 0x3FDE
-    BSLSIGNATURE            : origin = 0xFFDE, length = 0x0002, fill = 0xFFFF
-    INT00                   : origin = 0xFFE0, length = 0x0002
-    INT01                   : origin = 0xFFE2, length = 0x0002
-    INT02                   : origin = 0xFFE4, length = 0x0002
-    INT03                   : origin = 0xFFE6, length = 0x0002
-    INT04                   : origin = 0xFFE8, length = 0x0002
-    INT05                   : origin = 0xFFEA, length = 0x0002
-    INT06                   : origin = 0xFFEC, length = 0x0002
-    INT07                   : origin = 0xFFEE, length = 0x0002
-    INT08                   : origin = 0xFFF0, length = 0x0002
-    INT09                   : origin = 0xFFF2, length = 0x0002
-    INT10                   : origin = 0xFFF4, length = 0x0002
-    INT11                   : origin = 0xFFF6, length = 0x0002
-    INT12                   : origin = 0xFFF8, length = 0x0002
-    INT13                   : origin = 0xFFFA, length = 0x0002
-    INT14                   : origin = 0xFFFC, length = 0x0002
+    RAM                     : origin = 0x1100, length = 0x1000
+    INFOA                   : origin = 0x1080, length = 0x0080
+    INFOB                   : origin = 0x1000, length = 0x0080
+    FLASH                   : origin = 0x2100, length = 0xDEBE
+    FLASH2                  : origin = 0x10000,length = 0x10000
+    BSLSIGNATURE            : origin = 0xFFBE, length = 0x0002, fill = 0xFFFF
+    INT00                   : origin = 0xFFC0, length = 0x0002
+    INT01                   : origin = 0xFFC2, length = 0x0002
+    INT02                   : origin = 0xFFC4, length = 0x0002
+    INT03                   : origin = 0xFFC6, length = 0x0002
+    INT04                   : origin = 0xFFC8, length = 0x0002
+    INT05                   : origin = 0xFFCA, length = 0x0002
+    INT06                   : origin = 0xFFCC, length = 0x0002
+    INT07                   : origin = 0xFFCE, length = 0x0002
+    INT08                   : origin = 0xFFD0, length = 0x0002
+    INT09                   : origin = 0xFFD2, length = 0x0002
+    INT10                   : origin = 0xFFD4, length = 0x0002
+    INT11                   : origin = 0xFFD6, length = 0x0002
+    INT12                   : origin = 0xFFD8, length = 0x0002
+    INT13                   : origin = 0xFFDA, length = 0x0002
+    INT14                   : origin = 0xFFDC, length = 0x0002
+    INT15                   : origin = 0xFFDE, length = 0x0002
+    INT16                   : origin = 0xFFE0, length = 0x0002
+    INT17                   : origin = 0xFFE2, length = 0x0002
+    INT18                   : origin = 0xFFE4, length = 0x0002
+    INT19                   : origin = 0xFFE6, length = 0x0002
+    INT20                   : origin = 0xFFE8, length = 0x0002
+    INT21                   : origin = 0xFFEA, length = 0x0002
+    INT22                   : origin = 0xFFEC, length = 0x0002
+    INT23                   : origin = 0xFFEE, length = 0x0002
+    INT24                   : origin = 0xFFF0, length = 0x0002
+    INT25                   : origin = 0xFFF2, length = 0x0002
+    INT26                   : origin = 0xFFF4, length = 0x0002
+    INT27                   : origin = 0xFFF6, length = 0x0002
+    INT28                   : origin = 0xFFF8, length = 0x0002
+    INT29                   : origin = 0xFFFA, length = 0x0002
+    INT30                   : origin = 0xFFFC, length = 0x0002
     RESET                   : origin = 0xFFFE, length = 0x0002
 }
 
@@ -93,9 +108,18 @@ SECTIONS
     .sysmem     : {} > RAM                  /* Dynamic memory allocation area    */
     .stack      : {} > RAM (HIGH)           /* Software system stack             */
 
+#ifndef __LARGE_CODE_MODEL__
     .text       : {} > FLASH                /* Code                              */
+#else
+    .text       : {} >> FLASH2 | FLASH      /* Code                              */
+#endif
+    .text:_isr  : {} > FLASH                /* ISR Code space                    */
     .cinit      : {} > FLASH                /* Initialization tables             */
+#ifndef __LARGE_DATA_MODEL__
     .const      : {} > FLASH                /* Constant data                     */
+#else
+    .const      : {} >> FLASH | FLASH2      /* Constant data                     */
+#endif
     .bslsignature  : {} > BSLSIGNATURE      /* BSL Signature                     */
     .cio        : {} > RAM                  /* C I/O Buffer                      */
 
@@ -116,25 +140,39 @@ SECTIONS
 
     .infoA     : {} > INFOA              /* MSP430 INFO FLASH Memory segments */
     .infoB     : {} > INFOB
-    .infoC     : {} > INFOC
-    .infoD     : {} > INFOD
 
     /* MSP430 Interrupt vectors          */
-    TRAPINT      : { * ( .int00 ) } > INT00 type = VECT_INIT
+    .int00       : {}               > INT00
     .int01       : {}               > INT01
-    PORT1        : { * ( .int02 ) } > INT02 type = VECT_INIT
-    PORT2        : { * ( .int03 ) } > INT03 type = VECT_INIT
+    .int02       : {}               > INT02
+    .int03       : {}               > INT03
     .int04       : {}               > INT04
-    ADC10        : { * ( .int05 ) } > INT05 type = VECT_INIT
-    USCIAB0TX    : { * ( .int06 ) } > INT06 type = VECT_INIT
-    USCIAB0RX    : { * ( .int07 ) } > INT07 type = VECT_INIT
-    TIMER0_A1    : { * ( .int08 ) } > INT08 type = VECT_INIT
-    TIMER0_A0    : { * ( .int09 ) } > INT09 type = VECT_INIT
-    WDT          : { * ( .int10 ) } > INT10 type = VECT_INIT
-    COMPARATORA   : { * ( .int11 ) } > INT11 type = VECT_INIT
-    TIMER1_A1    : { * ( .int12 ) } > INT12 type = VECT_INIT
-    TIMER1_A0    : { * ( .int13 ) } > INT13 type = VECT_INIT
-    NMI          : { * ( .int14 ) } > INT14 type = VECT_INIT
+    .int05       : {}               > INT05
+    .int06       : {}               > INT06
+    .int07       : {}               > INT07
+    .int08       : {}               > INT08
+    .int09       : {}               > INT09
+    .int10       : {}               > INT10
+    .int11       : {}               > INT11
+    .int12       : {}               > INT12
+    .int13       : {}               > INT13
+    DAC12        : { * ( .int14 ) } > INT14 type = VECT_INIT
+    DMA          : { * ( .int15 ) } > INT15 type = VECT_INIT
+    BASICTIMER   : { * ( .int16 ) } > INT16 type = VECT_INIT
+    PORT2        : { * ( .int17 ) } > INT17 type = VECT_INIT
+    USART1TX     : { * ( .int18 ) } > INT18 type = VECT_INIT
+    USART1RX     : { * ( .int19 ) } > INT19 type = VECT_INIT
+    PORT1        : { * ( .int20 ) } > INT20 type = VECT_INIT
+    TIMERA1      : { * ( .int21 ) } > INT21 type = VECT_INIT
+    TIMERA0      : { * ( .int22 ) } > INT22 type = VECT_INIT
+    ADC12        : { * ( .int23 ) } > INT23 type = VECT_INIT
+    USCIAB0TX    : { * ( .int24 ) } > INT24 type = VECT_INIT
+    USCIAB0RX    : { * ( .int25 ) } > INT25 type = VECT_INIT
+    WDT          : { * ( .int26 ) } > INT26 type = VECT_INIT
+    COMPARATORA   : { * ( .int27 ) } > INT27 type = VECT_INIT
+    TIMERB1      : { * ( .int28 ) } > INT28 type = VECT_INIT
+    TIMERB0      : { * ( .int29 ) } > INT29 type = VECT_INIT
+    NMI          : { * ( .int30 ) } > INT30 type = VECT_INIT
     .reset       : {}               > RESET  /* MSP430 Reset vector         */
 }
 
@@ -142,5 +180,5 @@ SECTIONS
 /* Include peripherals memory map                                           */
 /****************************************************************************/
 
--l msp430g2553.cmd
+-l msp430fg4619.cmd
 

@@ -14,7 +14,7 @@ ORDERED_OBJS += \
 "./source/app.obj" \
 "./source/bsp.obj" \
 "./source/halGPIO.obj" \
-"../lnk_msp430g2553.cmd" \
+"../lnk_msp430fg4619.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
 

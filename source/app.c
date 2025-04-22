@@ -6,6 +6,7 @@ volatile SYS_mode_t lpm_mode;
 
 void main(void)
 {
+  WDTCTL = WDTPW+WDTHOLD;                   // Stop WDT
   //INIT STATES:
   state = state0;
   lpm_mode = mode0;

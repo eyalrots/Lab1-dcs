@@ -1,7 +1,7 @@
 #ifndef _halGPIO_H_
 #define _halGPIO_H_
 
-#include  "../header/bsp.h"    		// private library - BSP layer
+#include  "../header/bsp4.h"    		// private library - BSP layer
 #include  "../header/app.h"    		// private library - APP layer
 
 extern void sysConfig(void);
