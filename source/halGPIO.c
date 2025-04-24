@@ -31,15 +31,21 @@ void setLEDs(char ch) { LEDsArrPort |= ch; }
 //--------------------------------------------------------------------
 //				set P2 value
 //--------------------------------------------------------------------
-void write2Wave(unsigned char ch) { P2WaveOut = ch & P2WaveMask; }
+void write2Wave(unsigned char ch) { P2Out = ch & P2Mask; }
 //---------------------------------------------------------------------
 //             Increment / decrement LEDs shown value
 //---------------------------------------------------------------------
 void incLEDs(char val) { LEDsArrPort += val; }
 //---------------------------------------------------------------------
+//                    Print to RGB
+//---------------------------------------------------------------------
+void PrintRGB(char color) {
+  P2Out = color;
+}
+//---------------------------------------------------------------------
 //            Polling based Delay function
 //---------------------------------------------------------------------
-void delay(unsigned int t) { // t[usec]
+void delay(unsigned int t) { // t[10usec]
   volatile unsigned int i;
 
   for (i = t; i > 0; i--);
@@ -87,6 +93,9 @@ __interrupt void PBs_handler(void) {
     state = state3;
     dir3 = ~dir3;
     PBsArrIntPend &= ~PB2;
+  } else if (PBsArrIntPend & PB3) {
+    state = state4;
+    PBsArrIntPend &= ~PB3;
   }
   //---------------------------------------------------------------------
   //            Exit from a given LPM

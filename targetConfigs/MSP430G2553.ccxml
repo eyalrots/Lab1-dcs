@@ -5,7 +5,7 @@
         <connection XML_version="1.2" id="TI MSP430 USB1">
             <instance XML_version="1.2" href="drivers/msp430_emu.xml" id="drivers" xml="msp430_emu.xml" xmlpath="drivers"/>
             <platform XML_version="1.2" id="platform_0">
-                <instance id="MSP430FG4619" XML_version="1.2" xmlpath="devices" xml="MSP430FG4619.xml" href="devices/MSP430FG4619.xml" desc="MSP430FG4619"/>
+                <instance id="MSP430G2553" XML_version="1.2" xmlpath="devices" xml="MSP430G2553.xml" href="devices/MSP430G2553.xml" desc="MSP430G2553"/>
             </platform>
         </connection>
     </configuration>

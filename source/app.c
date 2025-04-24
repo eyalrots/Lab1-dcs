@@ -3,11 +3,20 @@
 volatile FSM_state_t state;
 volatile SYS_mode_t lpm_mode;
 
-
 void main(void)
 {
   WDTCTL = WDTPW+WDTHOLD;                   // Stop WDT
   //INIT STATES:
+  char colors[] = {
+    0x00,
+    0x01,
+    0x02,
+    0x03,
+    0x04,
+    0x05,
+    0x06,
+    0x07
+  };
   state = state0;
   lpm_mode = mode0;
   val1 = 0x00;
@@ -38,6 +47,9 @@ void main(void)
       case state3:
         wave();
         break;
+      case state4:
+        BlinkColors(colors, 8, 250);
+        state = state0;
       default:
         state=state0;
         break;

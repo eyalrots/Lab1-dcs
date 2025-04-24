@@ -13,10 +13,10 @@
 #define LEDsArrPortSel     P1SEL
 
 // P2forWave(out) abstraction
-#define P2WaveOut          P2OUT
-#define P2WaveDir          P2DIR
-#define P2WaveSel          P2SEL
-#define P2WaveMask         0x80
+#define P2Out          P2OUT
+#define P2Dir          P2DIR
+#define P2Sel          P2SEL
+#define P2Mask         0xf0
 
 // PushButtons abstraction
 #define PBsArrPort	       P2IN 

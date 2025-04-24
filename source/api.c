@@ -21,7 +21,7 @@ void countLED(){
 				val1--;
 		}
 		print2LEDs(val1);
-		delay(60000);
+		delay(50000);
 	}
 	enable_interrupts();
 }
@@ -37,7 +37,7 @@ void skipLED(){
 		else
 			val2 = val2 << 1;
 		print2LEDs(val2);
-		delay(60000);
+		delay(50000);
 	}
 	enable_interrupts();
 }
@@ -68,6 +68,20 @@ void wave(){
 	}
 }
 
- 
+//--------------------------------------------------------------------
+//     state 3: generate ones cycle of the wave - dependent on dir
+//--------------------------------------------------------------------  
+void BlinkColors(char colors[], int SIZE, int delay_ms) {
+	disable_interrupts();
+	volatile unsigned int i, j=0;
+	for (i=20; i>0; i--) {
+		PrintRGB((colors[j] << 4));
+		j = (j+1);
+		if (j == SIZE) { j = 0; }
+		delay(delay_ms*100);
+	}
+	PrintRGB(0);
+	enable_interrupts();
+}
   
 

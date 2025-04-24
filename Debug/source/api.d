@@ -3,8 +3,9 @@
 source/api.obj: ../source/api.c
 source/api.obj: ../header/api.h
 source/api.obj: ../header/halGPIO.h
-source/api.obj: ../header/bsp4.h
-source/api.obj: C:/ti/ccs2011/ccs/ccs_base/msp430/include/msp430xG46x.h
+source/api.obj: ../header/bsp.h
+source/api.obj: C:/ti/ccs2011/ccs/ccs_base/msp430/include/msp430.h
+source/api.obj: C:/ti/ccs2011/ccs/ccs_base/msp430/include/msp430g2553.h
 source/api.obj: C:/ti/ccs2011/ccs/ccs_base/msp430/include/in430.h
 source/api.obj: C:/ti/ccs2011/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include/intrinsics.h
 source/api.obj: C:/ti/ccs2011/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include/intrinsics_legacy_undefs.h
@@ -18,9 +19,11 @@ source/api.obj: ../header/halGPIO.h
 
 ../header/halGPIO.h:
 
-../header/bsp4.h:
+../header/bsp.h:
 
-C:/ti/ccs2011/ccs/ccs_base/msp430/include/msp430xG46x.h:
+C:/ti/ccs2011/ccs/ccs_base/msp430/include/msp430.h:
+
+C:/ti/ccs2011/ccs/ccs_base/msp430/include/msp430g2553.h:
 
 C:/ti/ccs2011/ccs/ccs_base/msp430/include/in430.h:
 
